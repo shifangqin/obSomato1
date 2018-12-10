@@ -1,0 +1,20 @@
+# # leishen
+#platformName: Android
+#platformVersion: 5.1.1
+#deviceName: emulator-5554 (5.1.1)
+#
+# real device
+platformName: Android
+platformVersion: 4.4.2
+deviceName: 10.10.6.194:30016
+
+
+appName: OBSomatosensoryWorld_GDYD_V2.1.14.apk
+appPackage: com.orbbec.gdgamecenter
+appActivity: com.orbbec.gdgamecenter.activity.LaunchActivity
+
+noReset: False
+#unicodeKeyboard: True
+#resetKeyboard: True
+ip: 127.0.0.1
+port: 4723
