@@ -1,13 +1,13 @@
 from common.desired_caps import desired_caps
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
-from common.common_func import Common
+from common.common_func import CommonFunc
 from time import sleep
 
 
-class RetainPageView(Common):
+class RetainPageView(CommonFunc):
     # driver=desired_caps()
-    rec_root=(By.XPATH,'//*[@text="益智教育"]')
+
     exitBtn = (By.ID, 'com.orbbec.gdgamecenter:id/cancel_exit_btn')
     game_content = (By.ID, 'com.orbbec.gdgamecenter:id/centent_layout')
     game_names = (By.CLASS_NAME, 'android.widget.TextView')
@@ -15,12 +15,8 @@ class RetainPageView(Common):
 
     def get_game_name_from_retainPg(self):
         name_list=[]
-
-        # confirm it is on home page, and then send "return" key
-        # WebDriverWait(self.driver,20).until(self.find_element(*self.rec_root))
-        sleep(10)
         self.driver.keyevent('4')
-        # WebDriverWait(self.driver, 10).until(self.find_element(*self.exitBtn))
+        WebDriverWait(self.driver, 10).until(lambda x:x.find_element(*self.exitBtn))
 
         """
         get the name list of the random recommended games

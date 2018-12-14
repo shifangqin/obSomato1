@@ -1,13 +1,13 @@
 from common.desired_caps import desired_caps
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
-from common.common_func import Common
+from common.common_func import CommonFunc
 from time import sleep
 
 import subprocess
 import re
 
-class AppUpdateView(Common):
+class AppUpdateView(CommonFunc):
 
     rec_root = (By.XPATH, '//*[@text="益智教育"]')
 
