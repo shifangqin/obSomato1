@@ -54,24 +54,8 @@ class CommonLogicValidation(CommonFunc):
     """
 key events
     """
-    def keyEvents_swipe_right(self,NumofActs):
-        while NumofActs:
-            self.driver.keyevent(22)
-            NumofActs=NumofActs-1
-        sleep(2)
-    def keyEvents_swipe_left(self,NumofActs):
-        while NumofActs:
-            self.driver.keyevent(21)
-        sleep(2)
-    def keyEvents_confirm(self):
-        self.driver.keyevent(66)
-    def keyEvents_return(self,NumofActs):
-        while NumofActs:
-            self.driver.keyevent(4)
-        sleep(2)
-    def adbKeyEvent(keyname):
-        adb='adb shell input keyevnet %s'%keyname
-        os.system(adb)
+
+
     """
 get to certain page
     """
@@ -85,7 +69,7 @@ get to certain page
             print('======well done,we are on homepage 推荐!!!!!=======')
     def swip_to_secondTab(self):
         self.confirm_on_homePge()
-        self.keyEvents_swipe_right(2)
+        self.adbKeyEvent(self.KEYCODE_DPAD_RIGHT,2)
 
         tab_name = (By.XPATH, '//*[@text="益智教育"]')
         try:
@@ -96,7 +80,7 @@ get to certain page
             print('======well done,we are on the second tab 益智教育!!!!!=======')
     def swip_to_thirdTab(self):
         self.confirm_on_homePge()
-        self.keyEvents_swipe_right(3)
+        self.adbKeyEvent(self.KEYCODE_DPAD_RIGHT,3)
 
         tab_name = (By.XPATH, '//*[@text="健康互动"]')
         try:
@@ -107,7 +91,7 @@ get to certain page
             print('======well done,we are on the third  tab 健康互动!!!!!=======')
     def swip_to_fourthTab(self):
         self.confirm_on_homePge()
-        self.keyEvents_swipe_right(4)
+        self.adbKeyEvent(self.KEYCODE_DPAD_RIGHT, 4)
 
         tab_name = (By.XPATH, '//*[@text="休闲娱乐"]')
         try:
@@ -118,7 +102,7 @@ get to certain page
             print('======well done,we are on fourth tab闲休娱乐!!!!!=======')
     def go_person_center(self):
         self.confirm_on_homePge()
-        self.keyEvents_swipe_right(5)
+        self.adbKeyEvent(self.KEYCODE_DPAD_RIGHT, 5)
 
 
         try:
@@ -146,7 +130,7 @@ apps installation
         self.confirm_on_homePge()
 
         self.find_element(*self.reco_sec_appRoot).click()
-        self.keyEvents_confirm()
+        self.KEYCONDE_CONFIRM()
         sleep(3)
 
         try:
@@ -264,23 +248,38 @@ retain page
         sleep(10)
         return name_list
 
-    def inject_certain_size(self,reqsize):
-        command1 = 'adb shell df'
-        bsNum = 1024
-        p = subprocess.Popen(command1, stdout=subprocess.PIPE, shell=True)
-        out = p.communicate()[0]
-        size, userd, freesize = re.findall(r'/data\s+(\d+\.\d+)G\s+(\d+\.\d+)G\s+(\d+\.\d+)G', str(out))[0]
+    def inject_certain_trash(self):
+        cmd1 = 'adb shell df'
 
-        countNum = freesize - int(reqsize / bsNum) + 1
-        command2='dd if=/dev/zero of=test.zip bs=%s count=%s'%(bsNum,countNum)
-        os.system(command2)
+        p = subprocess.Popen(cmd1, stdout=subprocess.PIPE, shell=True)
+        out = p.communicate()[0]
+        size, userd, fsize = re.findall(r'/data\s+(\d+\.\d+)G\s+(\d+\.\d+)G\s+(\d+\.\d+)G', str(out))[0]
+        free_size=float(fsize)
+
+        bsNum = 102400 #100Kb
+        countNum=int ((free_size * 1048576)%bsNum) # 换算成百KB
+
+
+        # cmd2='adb shell'
+        # os.system(cmd2)
+        # os.chdir('/data/data')
+
+        cmd3 ='adb shell dd if=/dev/zero of=/data/data/test.zip bs=%s count=%s'%(bsNum,countNum)
+        os.system(cmd3)
+
+
+
 
 
 if __name__ == '__main__':
     csv_file = '../data_input/sichuanAppList.csv'
     driver=desired_caps()
-    commonfuc=CommonFunc(driver)
+
     Intial=CommonLogicValidation(driver)
+    # Intial.swip_to_secondTab()
+    Intial.inject_certain_trash()
+    # Intial.install_certain_app()
+    # Intial.getScreenShot('Insufficient Tip')
 
 
 

@@ -6,10 +6,10 @@
 # real device
 platformName: Android
 platformVersion: 4.4.2
-deviceName: 10.10.7.31:30016
+deviceName: 10.10.6.203:30016
 
 
-appName: OBSomatosensoryWorld_GDYD_V2.1.14.apk
+appName: OBSomatosensoryWorld_HNYD_V2.1.21.apk
 appPackage: com.orbbec.gdgamecenter
 appActivity: com.orbbec.gdgamecenter.activity.LaunchActivity
 
